@@ -43,7 +43,6 @@ public class Planet : MonoBehaviour
 				this.oldResourceImageCount = numberResourceImages;
 				Debug.Log("Number of resource indicators: " + this.oldResourceImageCount);
 			}
-			
 			oldResourceCount = planetResource.count;
 		}
 	}
@@ -52,11 +51,7 @@ public class Planet : MonoBehaviour
 	{
 		if (this.planetResource.count == 0)
 			return 0;
-		Debug.Log("Number of resources: " + this.planetResource.count);
-		Debug.Log("Number of resources max: " + this.planetResource.maxCount);
-		Debug.Log("Indicator count: " + resourceIndicatorCount);
-		int indicators = (int) ((float) this.planetResource.count / (float) this.planetResource.maxCount * 100 / resourceIndicatorCount) + 1;
-		Debug.Log("Indicators shown: " + indicators);
+		int indicators = (int) ((float) this.planetResource.count / (float) this.planetResource.maxCount * resourceIndicatorCount) + 1;
 		return indicators;
 	}
 
@@ -79,9 +74,11 @@ public class Planet : MonoBehaviour
 		foreach (Transform child in transform)
 			if (child.name.Equals(resourceName))
 				resources.Add(child);
+		if (resources.Count == 0)
+			return;
 		for (int i = 0; i < count; i++)
 		{
-			int randomIndex = Random.Range(0, resources.Count - 1);
+			int randomIndex = Random.Range(0, resources.Count);
 			Destroy(resources[randomIndex].gameObject);
 		}
 	}
@@ -93,7 +90,7 @@ public class Planet : MonoBehaviour
 		float localScale = scale * 0.8f;
 		for(int i = 0; i < count; i++)
 		{
-			Vector2 pos = new Vector2(Random.Range(0, localScale) - localScale / 2, Random.Range(0, localScale)  - localScale / 2 );
+			Vector2 pos = new Vector2(Random.Range(0, localScale) - localScale / 2, Random.Range(0, localScale) - localScale / 2 );
 			addResource(pos);
 		}
 	}
@@ -111,7 +108,9 @@ public class Planet : MonoBehaviour
 
 	public void resourcesMined(int count)
 	{
-		int maxPerFloating = (int) ((float) this.planetResource.maxCount / resourceIndicatorCount);
+		int maxPerFloating = (int) ((float) this.planetResource.maxCount / (float) resourceIndicatorCount);
+		if (maxPerFloating == 0)
+			maxPerFloating = 1;
 
 		GameObject obj = null;
 		FloatingResource floating = null;

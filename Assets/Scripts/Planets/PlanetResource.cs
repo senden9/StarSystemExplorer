@@ -17,12 +17,14 @@ public class PlanetResource : MonoBehaviour
 		get { return _maxCount; }
 	}
 
-	private int _maxCount;
+	private int _maxCount = 10;
 	
 	// Use this for initialization
 	void Start ()
 	{
 		_maxCount = (int) Utils.generateNormalRandom(meanResourceCount, sigmaResourcecount);
+		if (_maxCount <= 0)
+			_maxCount = 1;
 		count = _maxCount;
 	}
 }

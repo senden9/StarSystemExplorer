@@ -33,38 +33,50 @@ public class PlanetsGenerator : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	
 		for (int i = 0; i < numberOfPlanets; i++)
 		{
-			int iteration = 0;
 			Vector2 coordinates;
 			float randomScale;
-			do
-			{
-					coordinates = new Vector2(
-					Random.Range(-dimensionWidth / 2, dimensionWidth / 2),
-					Random.Range(-dimensionHeight / 2, dimensionHeight / 2)
-				);
-
-				randomScale = Random.Range(this.minRandomScale, this.maxRandomScale);
-				iteration++;
-				if (iteration > 100)
-					break;
-			} while (!checkIfCoordinatesAreAllowed(randomScale, coordinates));
+			
+			calculateCoordinatesAndScale(out coordinates, out randomScale);
 			
 			PlanetSpecs spec = new PlanetSpecs();
 			spec.coordinates = coordinates;
 			spec.scale = randomScale;
 			specs.Add(spec);
-			
-			GameObject planet = Instantiate(planetPrefab, coordinates, Quaternion.identity);
-			planet.transform.parent = this.transform;
-			planet.GetComponent<Planet>().scale = randomScale;
-			int planetResource = Random.Range(0, this.planetResources.Count - 1);
-			planet.GetComponent<Planet>().planetResource = Instantiate(planetResources[planetResource]);
+
+			instantiatePlanet(coordinates, randomScale);
 		}
 	}
 
+	void calculateCoordinatesAndScale(out Vector2 coordinates, out float scale)
+	{
+		int iteration = 0;
+		do
+		{
+			coordinates = new Vector2(
+				Random.Range(-dimensionWidth / 2, dimensionWidth / 2),
+				Random.Range(-dimensionHeight / 2, dimensionHeight / 2)
+			);
+
+			scale = Random.Range(this.minRandomScale, this.maxRandomScale);
+			iteration++;
+			if (iteration > 100)
+				break;
+		} while (!checkIfCoordinatesAreAllowed(scale, coordinates));
+	}
+
+	void instantiatePlanet(Vector2 coordinates, float scale)
+	{
+		GameObject planet = Instantiate(planetPrefab, coordinates, Quaternion.identity);
+		planet.transform.parent = this.transform;
+		planet.GetComponent<Planet>().scale = scale;
+		int planetResource = Random.Range(0, this.planetResources.Count);
+		if (planetResource == 1)
+			Debug.Log("heyho");
+		planet.GetComponent<Planet>().planetResource = Instantiate(planetResources[planetResource]);
+	}
+	
 	bool checkIfCoordinatesAreAllowed(float scale, Vector2 coordinates)
 	{
 		foreach (PlanetSpecs spec in specs)
@@ -80,11 +92,6 @@ public class PlanetsGenerator : MonoBehaviour
 		return true;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	private class PlanetSpecs
 	{
 		public float scale;
