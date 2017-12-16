@@ -275,22 +275,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114129800494999706, guid: 957fd366f42bb1f4aa0c12c9440e30e9,
-        type: 2}
-      propertyPath: planetPrefab
-      value: 
-      objectReference: {fileID: 1166640360989372, guid: eb907f940b3591940952b65c1509bf8f,
-        type: 2}
-    - target: {fileID: 114180034690531044, guid: 957fd366f42bb1f4aa0c12c9440e30e9,
-        type: 2}
-      propertyPath: meanResourceCount
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114180034690531044, guid: 957fd366f42bb1f4aa0c12c9440e30e9,
-        type: 2}
-      propertyPath: sigmaResourcecount
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 957fd366f42bb1f4aa0c12c9440e30e9, type: 2}
   m_IsPrefabParent: 0
@@ -331,7 +315,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4251023799505264, guid: c8a778a7fa2bfe34fa4df33004c0128d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6.36
       objectReference: {fileID: 0}
     - target: {fileID: 4251023799505264, guid: c8a778a7fa2bfe34fa4df33004c0128d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -362,6 +346,14 @@ Prefab:
       propertyPath: planetResource
       value: 
       objectReference: {fileID: 2115394510}
+    - target: {fileID: 4153269868150070, guid: c8a778a7fa2bfe34fa4df33004c0128d, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425739058681562, guid: c8a778a7fa2bfe34fa4df33004c0128d, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c8a778a7fa2bfe34fa4df33004c0128d, type: 2}
   m_IsPrefabParent: 0

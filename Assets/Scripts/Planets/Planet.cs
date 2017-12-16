@@ -124,10 +124,24 @@ public class Planet : MonoBehaviour
 		}
 		else
 		{
-			obj = this.freeResources[this.freeResources.Count - 1];
-			floating = obj.GetComponent<FloatingResource>();
+			while (floating == null || obj == null)
+			{
+				if (this.freeResources.Count == 0)
+					break;
+				
+				obj = this.freeResources[this.freeResources.Count - 1];
+				if (obj == null)
+				{
+					this.freeResources.RemoveAt(this.freeResources.Count - 1);
+                    continue;
+				}
+				floating = obj.GetComponent<FloatingResource>();
+				
+				if (floating == null)
+					this.freeResources.Remove(obj);
+			}
 
-			if (floating.resourceCount > maxPerFloating)
+			if (this.freeResources.Count == 0 || floating.resourceCount > maxPerFloating)
 			{
 				addNewFloating(out obj, out floating);
 			}
@@ -142,7 +156,6 @@ public class Planet : MonoBehaviour
 	{
 		obj = new GameObject("FloatingResource");
 		obj.transform.parent = this.transform;
-		obj.transform.localPosition = Vector3.zero;
 
 		floating = obj.AddComponent<FloatingResource>();
 		floating.resource = Instantiate(this.planetResource.resource);
@@ -151,7 +164,11 @@ public class Planet : MonoBehaviour
 		float t = scale * Random.Range(0, 2 * (float) Math.PI);
 		float scaling = 1.25f;
 		obj.transform.localPosition = new Vector2((float) Math.Cos(t) * scaling, (float) Math.Sin(t) * scaling);
+		floating.resource.transform.localPosition = obj.transform.localPosition;
 		floating.resourceCount = 0;
+
+		PolygonCollider2D colldier = obj.AddComponent<PolygonCollider2D>();
+		colldier.isTrigger = true;
 
 		this.freeResources.Add(obj);
 	}
