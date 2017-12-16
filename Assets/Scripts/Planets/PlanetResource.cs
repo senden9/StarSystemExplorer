@@ -25,9 +25,4 @@ public class PlanetResource : MonoBehaviour
 		_maxCount = (int) Utils.generateNormalRandom(meanResourceCount, sigmaResourcecount);
 		count = _maxCount;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

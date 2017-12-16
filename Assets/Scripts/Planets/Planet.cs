@@ -9,13 +9,16 @@ public class Planet : MonoBehaviour
 	
 	public PlanetResource planetResource;
 
-	private GameObject resource;
-
 	private int oldResourceCount = 0;
 
 	private int oldResourceImageCount = 0;
 	
-	private String resourceName = "Resource";
+	private String resourceName = "ResourceIndicator";
+
+	public int resourceIndicatorCount = 10;
+	
+	//Highest Resoruce grows and gets resources added until it is "full"
+	private List<GameObject> freeResources = new List<GameObject>();
 	
 	// Use this for initialization
 	void Start ()
@@ -23,6 +26,7 @@ public class Planet : MonoBehaviour
 		this.transform.localScale = Vector3.one * scale;
 		this.oldResourceCount = planetResource.count;
 		this.oldResourceImageCount = calculateResourceImageCount();
+		Debug.Log("Number of resource indicators: " + this.oldResourceImageCount);
 		renderResource(this.oldResourceImageCount);
 	}
 	
@@ -32,24 +36,28 @@ public class Planet : MonoBehaviour
 		if (oldResourceCount != planetResource.count)
 		{
 			int numberResourceImages = calculateResourceImageCount();
-			Debug.Log("Percentage: " + numberResourceImages);
 
 			if (this.oldResourceImageCount != numberResourceImages)
 			{
 				renderResource(numberResourceImages);
 				this.oldResourceImageCount = numberResourceImages;
+				Debug.Log("Number of resource indicators: " + this.oldResourceImageCount);
 			}
 			
 			oldResourceCount = planetResource.count;
 		}
-		
 	}
 
 	int calculateResourceImageCount()
 	{
 		if (this.planetResource.count == 0)
 			return 0;
-		return (int) ((float) this.planetResource.count / (float) this.planetResource.maxCount * 10) + 1;
+		Debug.Log("Number of resources: " + this.planetResource.count);
+		Debug.Log("Number of resources max: " + this.planetResource.maxCount);
+		Debug.Log("Indicator count: " + resourceIndicatorCount);
+		int indicators = (int) ((float) this.planetResource.count / (float) this.planetResource.maxCount * 100 / resourceIndicatorCount) + 1;
+		Debug.Log("Indicators shown: " + indicators);
+		return indicators;
 	}
 
 	void renderResource(int numberResourceImages)
@@ -82,12 +90,57 @@ public class Planet : MonoBehaviour
 
 	void addResource(Vector2 localPosition, float resourceScale = 0.2f)
 	{
-		GameObject go = new GameObject("Resource");
+		GameObject go = new GameObject(resourceName);
 		SpriteRenderer resourceRenderer = go.AddComponent<SpriteRenderer>();
 		resourceRenderer.sprite = planetResource.resource.sprite;
 		resourceRenderer.sortingOrder = 1;
 		go.transform.parent = this.transform;
 		go.transform.localPosition = localPosition;
 		go.transform.localScale = Vector3.one * resourceScale;
+	}
+
+	public void resourcesMined(int count)
+	{
+		int maxPerFloating = (int) ((float) this.planetResource.maxCount / resourceIndicatorCount);
+
+		GameObject obj = null;
+		FloatingResource floating = null;
+
+		if (freeResources.Count == 0)
+		{
+			// TODO: They CAN exceeed maxPerFloating, but i really donot care by now...
+			addNewFloating(count, out obj, out floating);
+		}
+		else
+		{
+			obj = this.freeResources[this.freeResources.Count - 1];
+			floating = obj.GetComponent<FloatingResource>();
+
+			if (floating.resourceCount > maxPerFloating)
+			{
+				addNewFloating(count, out obj, out floating);
+			}
+		}
+
+		// TODO: By now, resources CAN have more than maxPerFloating, but i do not want to fix this
+		floating.resourceCount += count;
+		floating.scale = (float) floating.resourceCount / (float) maxPerFloating;
+	}
+
+	public void addNewFloating(int count, out GameObject obj, out FloatingResource floating)
+	{
+		obj = new GameObject("FloatingResource");
+		obj.transform.parent = this.transform;
+		floating = obj.AddComponent<FloatingResource>();
+
+		float t = scale * Random.Range(0, 2 * (float)Math.PI);
+		float scaling = 1.25f;
+		obj.transform.localPosition = new Vector2((float)Math.Cos(t) * scaling, (float)Math.Sin(t) * scaling);
+		floating.orbiting = this.gameObject;
+		floating.resourceCount = 0;
+		floating.resource = Instantiate(this.planetResource.resource);
+		floating.resource.transform.parent = obj.transform;
+		this.freeResources.Add(obj);
+		
 	}
 }

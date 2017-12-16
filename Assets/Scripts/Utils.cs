@@ -13,4 +13,9 @@ public class Utils {
 
         return (mu + sigma * n);
     }
+
+    public static bool randomBool()
+    {
+        return Random.Range(0, 1) > 0.5;
+    }
 }
