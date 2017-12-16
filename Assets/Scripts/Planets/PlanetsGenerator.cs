@@ -25,6 +25,8 @@ public class PlanetsGenerator : MonoBehaviour
 	
 	[Range(MinScale, MaxScale)]
 	public float maxRandomScale = 1;
+
+	public List<PlanetResource> planetResources = new List<PlanetResource>();
 	
 	List<PlanetSpecs> specs = new List<PlanetSpecs>();
 		
@@ -46,8 +48,7 @@ public class PlanetsGenerator : MonoBehaviour
 
 				randomScale = Random.Range(this.minRandomScale, this.maxRandomScale);
 				iteration++;
-				Debug.Log("Iteration: " + iteration);
-				if (iteration > 10)
+				if (iteration > 100)
 					break;
 			} while (!checkIfCoordinatesAreAllowed(randomScale, coordinates));
 			
@@ -59,6 +60,8 @@ public class PlanetsGenerator : MonoBehaviour
 			GameObject planet = Instantiate(planetPrefab, coordinates, Quaternion.identity);
 			planet.transform.parent = this.transform;
 			planet.GetComponent<Planet>().scale = randomScale;
+			int planetResource = Random.Range(0, this.planetResources.Count - 1);
+			planet.GetComponent<Planet>().planetResource = Instantiate(planetResources[planetResource]);
 		}
 	}
 
