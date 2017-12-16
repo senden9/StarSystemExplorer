@@ -112,6 +112,56 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &227911863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 227911865}
+  - component: {fileID: 227911864}
+  m_Layer: 0
+  m_Name: AstroidSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &227911864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 227911863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6a21ea77c2c1f49b8b692eae58604b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAngularVelocity: 57
+  maxAngularVelocity: 245
+  autoDestroy: 5
+  AstroidPrefab: {fileID: 1894118138903024, guid: b1e8983eac9c4ee4fa5439656c8f70d7,
+    type: 2}
+  directionMean: 45
+  directionVar: 20
+  nrAstroids: 10
+  speedMean: 2
+  speedVar: 0.2
+--- !u!4 &227911865
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 227911863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.91855216, y: -0.056942455, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &327715639
 GameObject:
   m_ObjectHideFlags: 0
