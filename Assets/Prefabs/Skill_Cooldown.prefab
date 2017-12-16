@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114761494909671120}
   - component: {fileID: 114047523321673388}
   m_Layer: 5
-  m_Name: Skill 1
+  m_Name: Skill_Cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,6 +77,7 @@ MonoBehaviour:
   ImageCooldown: {fileID: 114580511059814528}
   cooldownCounter: {fileID: 114354752738885622}
   cooldown: 10
+  key: 
 --- !u!114 &114354752738885622
 MonoBehaviour:
   m_ObjectHideFlags: 1
