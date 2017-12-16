@@ -29,7 +29,7 @@ public class AsteoridShooting : NetworkBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.S) && isLocalPlayer) {
+        if (Input.GetKeyDown(KeyCode.F) && isLocalPlayer) {
             fire();
         }
 
