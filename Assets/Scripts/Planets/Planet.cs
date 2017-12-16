@@ -124,23 +124,9 @@ public class Planet : MonoBehaviour
 		}
 		else
 		{
-			while (floating == null || obj == null)
-			{
-				if (this.freeResources.Count == 0)
-					break;
+			obj = this.freeResources[this.freeResources.Count - 1];
+			floating = obj.GetComponent<FloatingResource>();
 				
-				obj = this.freeResources[this.freeResources.Count - 1];
-				if (obj == null)
-				{
-					this.freeResources.RemoveAt(this.freeResources.Count - 1);
-                    continue;
-				}
-				floating = obj.GetComponent<FloatingResource>();
-				
-				if (floating == null)
-					this.freeResources.Remove(obj);
-			}
-
 			if (this.freeResources.Count == 0 || floating.resourceCount > maxPerFloating)
 			{
 				addNewFloating(out obj, out floating);
@@ -150,6 +136,21 @@ public class Planet : MonoBehaviour
 		// TODO: By now, resources CAN have more than maxPerFloating, but i do not want to fix this
 		floating.resourceCount += amountMined;
 		obj.transform.localScale = Vector3.one * (float) floating.resourceCount / (float) maxPerFloating * maxResourceScale;
+	}
+
+	public int emptyFloatingListAndReturnAccumulatedValues(out ResourceTypes resourceType)
+	{
+		int resources = 0;
+		for (int i = freeResources.Count - 1; i >= 0; i--)
+		{
+			FloatingResource floating = freeResources[i].GetComponent<FloatingResource>();
+			if (floating != null)
+				resources += floating.resourceCount;
+			Destroy(freeResources[i]);
+		}
+		resourceType = this.planetResource.resource.resourceType;
+		this.freeResources = new List<GameObject>();
+		return resources;
 	}
 
 	public void addNewFloating(out GameObject obj, out FloatingResource floating)

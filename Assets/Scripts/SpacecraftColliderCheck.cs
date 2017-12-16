@@ -9,11 +9,12 @@ public class SpacecraftColliderCheck : MonoBehaviour {
 			return;
 		}
 
-		FloatingResource resource = coll.gameObject.GetComponent<FloatingResource>();
-		if (resource != null)
+		Planet planet = coll.gameObject.GetComponent<Planet>();
+		if (planet != null)
 		{
-			Debug.Log("Collected: " + resource.resourceCount);
-			Destroy(coll.gameObject);
+			ResourceTypes resourceType;
+			int count = planet.emptyFloatingListAndReturnAccumulatedValues(out resourceType);
+			Debug.Log("Collected: " + resourceType + " " + count);
 		}
 	}
 }
