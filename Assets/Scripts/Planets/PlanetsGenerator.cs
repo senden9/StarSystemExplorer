@@ -70,15 +70,11 @@ public class PlanetsGenerator : MonoBehaviour
 	{
 		GameObject planet = Instantiate(planetPrefab, coordinates, Quaternion.identity);
 		planet.transform.parent = this.transform;
+		planet.GetComponent<Planet>().scale = scale;
 		int planetResource = Random.Range(0, this.planetResources.Count);
 		if (planetResource == 1)
 			Debug.Log("heyho");
-		Planet planetScript = planet.GetComponent<Planet>();
-		if (!planetScript)
-			planetScript = planet.AddComponent<Planet>();
-		planetScript.scale = scale;
-		planetScript.planetResource = Instantiate(planetResources[planetResource]);
-		planetScript.planetResource.transform.parent = planet.transform;
+		planet.GetComponent<Planet>().planetResource = Instantiate(planetResources[planetResource]);
 	}
 	
 	bool checkIfCoordinatesAreAllowed(float scale, Vector2 coordinates)

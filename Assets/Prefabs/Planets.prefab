@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d80d0d82347dc469acab4d093a786d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planetPrefab: {fileID: 1150112808541978, guid: eb907f940b3591940952b65c1509bf8f,
+  planetPrefab: {fileID: 1176008335609596, guid: c8a778a7fa2bfe34fa4df33004c0128d,
     type: 2}
   dimensionWidth: 40
   dimensionHeight: 40
@@ -238,6 +238,7 @@ MonoBehaviour:
   minRandomScale: 1
   maxRandomScale: 2.25
   planetResources:
+  - {fileID: 114180034690531044}
   - {fileID: 114180034690531044}
 --- !u!114 &114180034690531044
 MonoBehaviour:
@@ -251,8 +252,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resource: {fileID: 114862776721383324}
-  meanResourceCount: 200
-  sigmaResourcecount: 20
+  meanResourceCount: 10
+  sigmaResourcecount: 1
   count: 0
 --- !u!114 &114626499436674766
 MonoBehaviour:

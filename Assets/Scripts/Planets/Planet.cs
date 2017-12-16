@@ -16,8 +16,6 @@ public class Planet : MonoBehaviour
 	private String resourceName = "ResourceIndicator";
 
 	public int resourceIndicatorCount = 10;
-
-	public float maxResourceScale = 0.2f;
 	
 	//Highest Resoruce grows and gets resources added until it is "full"
 	private List<GameObject> freeResources = new List<GameObject>();
@@ -108,7 +106,7 @@ public class Planet : MonoBehaviour
 		go.transform.localScale = Vector3.one * resourceScale;
 	}
 
-	public void resourcesMined(int amountMined)
+	public void resourcesMined(int count)
 	{
 		int maxPerFloating = (int) ((float) this.planetResource.maxCount / (float) resourceIndicatorCount);
 		if (maxPerFloating == 0)
@@ -120,7 +118,7 @@ public class Planet : MonoBehaviour
 		if (freeResources.Count == 0)
 		{
 			// TODO: They CAN exceeed maxPerFloating, but i really donot care by now...
-			addNewFloating(out obj, out floating);
+			addNewFloating(count, out obj, out floating);
 		}
 		else
 		{
@@ -129,30 +127,29 @@ public class Planet : MonoBehaviour
 
 			if (floating.resourceCount > maxPerFloating)
 			{
-				addNewFloating(out obj, out floating);
+				addNewFloating(count, out obj, out floating);
 			}
 		}
 
 		// TODO: By now, resources CAN have more than maxPerFloating, but i do not want to fix this
-		floating.resourceCount += amountMined;
-		obj.transform.localScale = Vector3.one * (float) floating.resourceCount / (float) maxPerFloating * maxResourceScale;
+		floating.resourceCount += count;
+		floating.scale = (float) floating.resourceCount / (float) maxPerFloating;
 	}
 
-	public void addNewFloating(out GameObject obj, out FloatingResource floating)
+	public void addNewFloating(int count, out GameObject obj, out FloatingResource floating)
 	{
 		obj = new GameObject("FloatingResource");
 		obj.transform.parent = this.transform;
-		obj.transform.localPosition = Vector3.zero;
-
 		floating = obj.AddComponent<FloatingResource>();
+
+		float t = scale * Random.Range(0, 2 * (float)Math.PI);
+		float scaling = 1.25f;
+		obj.transform.localPosition = new Vector2((float)Math.Cos(t) * scaling, (float)Math.Sin(t) * scaling);
+		floating.orbiting = this.gameObject;
+		floating.resourceCount = 0;
 		floating.resource = Instantiate(this.planetResource.resource);
 		floating.resource.transform.parent = obj.transform;
-
-		float t = scale * Random.Range(0, 2 * (float) Math.PI);
-		float scaling = 1.25f;
-		obj.transform.localPosition = new Vector2((float) Math.Cos(t) * scaling, (float) Math.Sin(t) * scaling);
-		floating.resourceCount = 0;
-
 		this.freeResources.Add(obj);
+		
 	}
 }
