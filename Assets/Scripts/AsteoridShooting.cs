@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class AsteoridShooting : MonoBehaviour {
+public class AsteoridShooting : NetworkBehaviour
+{
 
     private const float MinScale = 1;
     private const float MaxScale = 1000;
@@ -27,13 +29,19 @@ public class AsteoridShooting : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.S)) {
+        if (Input.GetKeyDown(KeyCode.S) && isLocalPlayer) {
             fire();
         }
 
     }
 
     public void fire()
+    {
+        CmdFire();
+    }
+
+    [Command]
+    public void CmdFire()
     {
         for (int i = 0; i < nrAstroids; i++)
         {
@@ -49,6 +57,9 @@ public class AsteoridShooting : MonoBehaviour {
                 );
             astroid.GetComponent<Rigidbody2D>().angularVelocity = sign * magnitude;
             astroid.GetComponent<Rigidbody2D>().velocity = Quaternion.Euler(0, 0, direction) * new Vector2(speed, 0);
+
+            // Spawn the astroid on the Clients
+            NetworkServer.Spawn(astroid);
 
             // Destroy after X seconds
             Destroy(astroid, autoDestroy);
