@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gottcontroller1 : MonoBehaviour {
+public class NatureController : MonoBehaviour {
 
 
 
