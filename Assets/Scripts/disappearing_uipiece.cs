@@ -13,16 +13,15 @@ public class disappearing_uipiece : MonoBehaviour {
 
         planetTextComponent = GetComponent<Text>();
 
-        planetTextComponent.text = "boobies";
+        setGuiText(14);
     }
 
     public void setGuiText(int resourcenumber) {
-        //Random rnd = new Random();
-        //int randomnumber = rnd.Next(1,16777215);
-        //string guitext = "";
-        //guitext = guitext + "Resources: "+ resourcenumber.ToString() + "\n";
-        //guitext = guitext + "Number: " + randomnumber.ToString();
-        //planetTextComponent.text = guiText;
+        int randomnumber = Random.Range(1, 16777215);
+        string guitext = "";
+        guitext = guitext + "Resources: "+ resourcenumber.ToString() + "\n";
+        guitext = guitext + "Planet Nr.: " + randomnumber.ToString("X");
+        planetTextComponent.text = guitext;
     }
 
     

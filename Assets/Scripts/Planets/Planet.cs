@@ -35,7 +35,7 @@ public class Planet : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (oldResourceCount != planetResource.count)
+		if (planetResource != null && oldResourceCount != planetResource.count)
 		{
 			int numberResourceImages = calculateResourceImageCount();
 
@@ -126,8 +126,8 @@ public class Planet : MonoBehaviour
 		{
 			obj = this.freeResources[this.freeResources.Count - 1];
 			floating = obj.GetComponent<FloatingResource>();
-
-			if (floating.resourceCount > maxPerFloating)
+				
+			if (this.freeResources.Count == 0 || floating.resourceCount > maxPerFloating)
 			{
 				addNewFloating(out obj, out floating);
 			}
@@ -138,11 +138,25 @@ public class Planet : MonoBehaviour
 		obj.transform.localScale = Vector3.one * (float) floating.resourceCount / (float) maxPerFloating * maxResourceScale;
 	}
 
+	public int emptyFloatingListAndReturnAccumulatedValues(out ResourceTypes resourceType)
+	{
+		int resources = 0;
+		for (int i = freeResources.Count - 1; i >= 0; i--)
+		{
+			FloatingResource floating = freeResources[i].GetComponent<FloatingResource>();
+			if (floating != null)
+				resources += floating.resourceCount;
+			Destroy(freeResources[i]);
+		}
+		resourceType = this.planetResource.resource.resourceType;
+		this.freeResources = new List<GameObject>();
+		return resources;
+	}
+
 	public void addNewFloating(out GameObject obj, out FloatingResource floating)
 	{
 		obj = new GameObject("FloatingResource");
 		obj.transform.parent = this.transform;
-		obj.transform.localPosition = Vector3.zero;
 
 		floating = obj.AddComponent<FloatingResource>();
 		floating.resource = Instantiate(this.planetResource.resource);
@@ -151,7 +165,11 @@ public class Planet : MonoBehaviour
 		float t = scale * Random.Range(0, 2 * (float) Math.PI);
 		float scaling = 1.25f;
 		obj.transform.localPosition = new Vector2((float) Math.Cos(t) * scaling, (float) Math.Sin(t) * scaling);
+		floating.resource.transform.localPosition = obj.transform.localPosition;
 		floating.resourceCount = 0;
+
+		PolygonCollider2D colldier = obj.AddComponent<PolygonCollider2D>();
+		colldier.isTrigger = true;
 
 		this.freeResources.Add(obj);
 	}

@@ -16,6 +16,11 @@ public class PlanetAgent : MonoBehaviour
 
     private float partlyMined = 0;
     private float partlyRegenerated = 0;
+
+    public float secondsToConquer = 5;
+
+    public float currentConquerTime = 0;
+    public OwnedBy currentlyBeeingConqueredBy = OwnedBy.NO_ONE;
     
     public void mine(float deltaTime)
     {
@@ -90,5 +95,37 @@ public class PlanetAgent : MonoBehaviour
         {
             Debug.LogError("No Planet found in parent");
         }
+    }
+
+    public void conquer(OwnedBy from, float deltaTime)
+    {
+        Debug.Log("Owned By: " + this.ownedBy);
+        Debug.Log("Is Already beeing conquered: " +
+                  (currentlyBeeingConqueredBy != OwnedBy.NO_ONE && currentlyBeeingConqueredBy != from));
+        Debug.Log("Times up? : " + (this.currentConquerTime >= this.secondsToConquer));
+        if ((this.ownedBy != OwnedBy.DESTROYED ||
+            this.ownedBy != OwnedBy.NO_ONE) && (
+            (currentlyBeeingConqueredBy != OwnedBy.NO_ONE && currentlyBeeingConqueredBy != from) ||
+            this.currentConquerTime >= this.secondsToConquer))
+        {
+            return;
+        }
+        
+        this.currentlyBeeingConqueredBy = from;
+        this.currentConquerTime += deltaTime;
+        Debug.Log("Current Conquering Time: " + this.currentConquerTime);
+
+        if (this.currentConquerTime >= this.secondsToConquer)
+        {
+            this.ownedBy = from;
+            Debug.Log("Conquered by: " + from);
+        }
+    }
+
+    public void abortConquering()
+    {
+        Debug.Log("Aborting Conquering");
+        this.currentConquerTime = 0;
+        this.currentlyBeeingConqueredBy = OwnedBy.NO_ONE;
     }
 }
