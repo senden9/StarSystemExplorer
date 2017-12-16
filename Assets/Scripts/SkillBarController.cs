@@ -33,13 +33,20 @@ public class SkillBarController : MonoBehaviour
 
         if (isCooldown)
         {
-            ImageCooldown.fillAmount += 1 / cooldown * Time.deltaTime;
+            if (ImageCooldown.fillAmount == 0) {
+                ImageCooldown.fillAmount = 1;
+            }
+            ImageCooldown.fillAmount =ImageCooldown.fillAmount - ( 1 / cooldown * Time.deltaTime);
 
-            if (ImageCooldown.fillAmount >= 1)
+            //if (ImageCooldown.fillAmount >= 1)
+            //{
+            //    ImageCooldown.fillAmount = 0;
+            //    isCooldown = false;
+
+            //}
+            if (ImageCooldown.fillAmount <= 0)
             {
-                ImageCooldown.fillAmount = 0;
                 isCooldown = false;
-
             }
             cooldownNumber -= Time.deltaTime;
             SetCountText();
