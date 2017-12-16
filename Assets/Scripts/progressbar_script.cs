@@ -6,21 +6,21 @@ using UnityEngine.UI;
 public class progressbar_script : MonoBehaviour {
 
     Image foregroundImage;
-    int progressbarvalue=0;
+    float progressbarvalue=0;
 
-    public int Value
+    public float Value
     {
         get
         {
             if (foregroundImage != null)
-                return (int)(foregroundImage.fillAmount * 100);
+                return (float)(foregroundImage.fillAmount );
             else
                 return 0;
         }
         set
         {
             if (foregroundImage != null)
-                foregroundImage.fillAmount = value / 100f;
+                foregroundImage.fillAmount = value;
         }
     }
 
@@ -31,14 +31,16 @@ public class progressbar_script : MonoBehaviour {
     }
 
     public void buttonPressed() {
-        progressbarvalue = progressbarvalue + 10;
-        progressbarvalue = progressbarvalue % 110;
+        progressbarvalue = progressbarvalue + 0.10f;
+        if (progressbarvalue > 1)
+        {
+            progressbarvalue = 0;
+        }
         setProgressbarValue(progressbarvalue);
     }
 
-    public void setProgressbarValue(int val) {
+    public void setProgressbarValue(float val) {
         Value = val;
-
     }
 	
 	// Update is called once per frame
