@@ -27,7 +27,7 @@ public class circular_progressbar : MonoBehaviour {
     // Use this for initialization
     void Start () {
         circularImage = gameObject.GetComponent<Image>();
-        Value = 0.2f;
+        Value = 0.0f;
     }
     public void buttonPressedCircular()
     {
