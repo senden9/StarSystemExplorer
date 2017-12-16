@@ -62,10 +62,12 @@ public class PlanetAgent : MonoBehaviour
         if (ownedBy == OwnedBy.DESTROYED || ownedBy == OwnedBy.NO_ONE)
             return;
         
-        if (ownedBy == OwnedBy.PLAYER_1)
+        
+        if (ownedBy == OwnedBy.PLAYER_1 || ownedBy == OwnedBy.PLAYER_2)
         {
             float deltaTime = Time.deltaTime;
             this.mine(deltaTime);
+            this.regenerate(deltaTime);
         }
     }
 
