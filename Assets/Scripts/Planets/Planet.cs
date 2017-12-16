@@ -133,6 +133,7 @@ public class Planet : MonoBehaviour
 				if (obj == null)
 				{
 					this.freeResources.RemoveAt(this.freeResources.Count - 1);
+                    continue;
 				}
 				floating = obj.GetComponent<FloatingResource>();
 				
