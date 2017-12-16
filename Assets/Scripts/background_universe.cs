@@ -26,10 +26,7 @@ public class background_universe : MonoBehaviour {
     
     void InstantiateBackground()
     {
-        //float leftEdgeX = -1f;
-        float rightEdgeX = columns + 0f;
-        //float bottomEdgeY = -1f;
-        float topEdgeY = rows + 0f;
+       
 
         for (int j = 0; j < rows; j++) {
             for (int i = 0; i <columns ; i++) {
