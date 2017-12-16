@@ -60,6 +60,8 @@ public class PlanetsGenerator : MonoBehaviour
 			GameObject planet = Instantiate(planetPrefab, coordinates, Quaternion.identity);
 			planet.transform.parent = this.transform;
 			planet.GetComponent<Planet>().scale = randomScale;
+			int planetResource = Random.Range(0, this.planetResources.Count - 1);
+			planet.GetComponent<Planet>().planetResource = Instantiate(planetResources[planetResource]);
 		}
 	}
 

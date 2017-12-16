@@ -5,9 +5,8 @@ using Random = UnityEngine.Random;
 
 public class Planet : MonoBehaviour
 {
-
 	public float scale = 1.0f;
-
+	
 	public PlanetResource planetResource;
 
 	private GameObject resource;
