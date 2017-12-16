@@ -15,23 +15,30 @@ public class PlanetAgent : MonoBehaviour
     private Planet planetScript;
 
     private float partlyMined = 0;
+    private float partlyRegenerated = 0;
     
     public void mine(float deltaTime)
     {
-        partlyMined += (deltaTime * minePerSecond * planetScript.planetResource.resource.miningTimeMultiplicator);
+        if (planetScript.planetResource.count <= 0)
+            return;
+        
+        partlyMined += deltaTime * minePerSecond * planetScript.planetResource.resource.miningTimeMultiplicator;
         if (partlyMined < 1)
             return;
+        
         int mined = (int) partlyMined;
         partlyMined = partlyMined - mined;
-        if (mined > planetScript.planetResource.count)
+        
+        planetScript.planetResource.count -= mined;
+
+        if (planetScript.planetResource.count <= 0)
         {
-            mined = planetScript.planetResource.count;
-            if (this.ownedBy == OwnedBy.PLAYER_2)
+            planetScript.planetResource.count = 0;
+            if (ownedBy == OwnedBy.PLAYER_2)
             {
-                this.ownedBy = OwnedBy.DESTROYED;
+                ownedBy = OwnedBy.DESTROYED;
             }
         }
-        planetScript.planetResource.count -= mined;
 
         this.planetScript.resourcesMined(mined);
     }
@@ -49,8 +56,14 @@ public class PlanetAgent : MonoBehaviour
     {
         if (this.ownedBy == OwnedBy.DESTROYED)
             return;
+
+        if (partlyRegenerated > planetScript.planetResource.maxCount)
+            return;
         
-        planetScript.planetResource.count += (int) (deltaTime * regeneratePerSecond * planetScript.planetResource.resource.regenerationTimeMultiplicator);
+        partlyRegenerated += deltaTime * regeneratePerSecond * planetScript.planetResource.resource.regenerationTimeMultiplicator;
+        planetScript.planetResource.count += (int) partlyRegenerated;
+        partlyRegenerated -= (int) partlyRegenerated;
+        
         if (planetScript.planetResource.count > planetScript.planetResource.maxCount)
         {
             planetScript.planetResource.count = planetScript.planetResource.maxCount;
@@ -59,7 +72,7 @@ public class PlanetAgent : MonoBehaviour
 
     public void Update()
     {
-        if (ownedBy == OwnedBy.DESTROYED || ownedBy == OwnedBy.NO_ONE)
+        if (ownedBy == OwnedBy.DESTROYED)
             return;
         
         if (ownedBy == OwnedBy.PLAYER_1)
