@@ -12,11 +12,15 @@ public class background_universe : MonoBehaviour {
     public int columns = 50;
     public int rows = 100;
     public float scale = 1;
+
+    public Vector3 origin;
 	// Use this for initialization
 	void Start () {
         background = new GameObject("Boardholder");
+        background.transform.SetParent(transform);
         InstantiateBackground();
         background.transform.localScale = Vector3.one * scale;
+        background.transform.position = origin;
     }
 
     
