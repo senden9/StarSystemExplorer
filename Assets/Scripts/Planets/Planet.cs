@@ -35,7 +35,7 @@ public class Planet : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (oldResourceCount != planetResource.count)
+		if (planetResource != null && oldResourceCount != planetResource.count)
 		{
 			int numberResourceImages = calculateResourceImageCount();
 
