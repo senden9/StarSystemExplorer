@@ -25,6 +25,8 @@ public class PlanetsGenerator : MonoBehaviour
 	
 	[Range(MinScale, MaxScale)]
 	public float maxRandomScale = 1;
+
+	public List<PlanetResource> planetResources = new List<PlanetResource>();
 	
 	List<PlanetSpecs> specs = new List<PlanetSpecs>();
 		
@@ -46,8 +48,7 @@ public class PlanetsGenerator : MonoBehaviour
 
 				randomScale = Random.Range(this.minRandomScale, this.maxRandomScale);
 				iteration++;
-				Debug.Log("Iteration: " + iteration);
-				if (iteration > 10)
+				if (iteration > 100)
 					break;
 			} while (!checkIfCoordinatesAreAllowed(randomScale, coordinates));
 			
