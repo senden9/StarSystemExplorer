@@ -27,7 +27,7 @@ public class Planet : MonoBehaviour
 		this.oldResourceCount = planetResource.count;
 		this.oldResourceImageCount = calculateResourceImageCount();
 		Debug.Log("Number of resource indicators: " + this.oldResourceImageCount);
-		renderResource(this.oldResourceImageCount);
+		renderResource(0, this.oldResourceImageCount);
 	}
 	
 	// Update is called once per frame
@@ -39,7 +39,7 @@ public class Planet : MonoBehaviour
 
 			if (this.oldResourceImageCount != numberResourceImages)
 			{
-				renderResource(numberResourceImages);
+				renderResource(this.oldResourceImageCount, numberResourceImages);
 				this.oldResourceImageCount = numberResourceImages;
 				Debug.Log("Number of resource indicators: " + this.oldResourceImageCount);
 			}
@@ -60,26 +60,36 @@ public class Planet : MonoBehaviour
 		return indicators;
 	}
 
-	void renderResource(int numberResourceImages)
+	void renderResource(int oldCount, int newCount)
 	{
 		if (!planetResource.resource.sprite)
 			return;
-		deleteOldResources();
-		addResources(numberResourceImages);
+		int toDelete = oldCount - newCount;
+		int toAdd = newCount - oldCount;
+		
+		deleteOldResources(toDelete);
+		addResources(toAdd);
 	}
 
-	void deleteOldResources()
+	void deleteOldResources(int count)
 	{
+		if (count <= 0)
+			return;
 		List<Transform> resources = new List<Transform>();
 		foreach (Transform child in transform)
 			if (child.name.Equals(resourceName))
 				resources.Add(child);
-		for (int i = resources.Count - 1; i >= 0; i--)
-			Destroy(resources[i].gameObject);
+		for (int i = 0; i < count; i++)
+		{
+			int randomIndex = Random.Range(0, resources.Count - 1);
+			Destroy(resources[randomIndex].gameObject);
+		}
 	}
 
 	void addResources(int count)
 	{
+		if (count <= 0)
+			return;
 		float localScale = scale * 0.8f;
 		for(int i = 0; i < count; i++)
 		{
