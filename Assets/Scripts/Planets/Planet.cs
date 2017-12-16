@@ -53,7 +53,7 @@ public class Planet : MonoBehaviour
 	{
 		if (this.planetResource.count == 0)
 			return 0;
-		int indicators = (int) ((float) this.planetResource.count / (float) this.planetResource.maxCount * resourceIndicatorCount) + 1;
+		int indicators = (int) ((float) this.planetResource.count / (float) this.planetResource.maxCount * resourceIndicatorCount);
 		return indicators;
 	}
 
