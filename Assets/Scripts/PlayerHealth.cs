@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : NetworkBehaviour
 {
     public const int maxHealth = 100;
+    [SyncVar]
     public int currentHealth = maxHealth;
 
     // Use this for initialization
@@ -21,6 +22,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (!isServer)
+        {
+            return;
+        }
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
