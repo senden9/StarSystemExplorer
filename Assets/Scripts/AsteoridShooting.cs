@@ -28,27 +28,32 @@ public class AsteoridShooting : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (Input.GetKeyDown(KeyCode.S)) {
-            for (int i = 0; i < nrAstroids; i++)
-            {
-                int sign = randomSign();
-                float magnitude = Random.Range(minAngularVelocity, maxAngularVelocity);
-                float direction = Random.Range(directionMean - directionVar / 2, directionMean + directionVar / 2);
-                float speed = Random.Range(speedMean - speedVar / 2, speedMean + speedVar / 2);
-
-                GameObject astroid = (GameObject)Instantiate(
-                    AstroidPrefab,
-                    gameObject.transform.position,
-                    gameObject.transform.rotation
-                    );
-                astroid.GetComponent<Rigidbody2D>().angularVelocity = sign * magnitude;
-                astroid.GetComponent<Rigidbody2D>().velocity = Quaternion.Euler(0, 0, direction) * new Vector2(speed, 0);
-
-                // Destroy after X seconds
-                Destroy(astroid, autoDestroy);
-
-            }
+            fire();
         }
 
+    }
+
+    public void fire()
+    {
+        for (int i = 0; i < nrAstroids; i++)
+        {
+            int sign = randomSign();
+            float magnitude = Random.Range(minAngularVelocity, maxAngularVelocity);
+            float direction = Random.Range(directionMean - directionVar / 2, directionMean + directionVar / 2);
+            float speed = Random.Range(speedMean - speedVar / 2, speedMean + speedVar / 2);
+
+            GameObject astroid = (GameObject)Instantiate(
+                AstroidPrefab,
+                gameObject.transform.position,
+                gameObject.transform.rotation
+                );
+            astroid.GetComponent<Rigidbody2D>().angularVelocity = sign * magnitude;
+            astroid.GetComponent<Rigidbody2D>().velocity = Quaternion.Euler(0, 0, direction) * new Vector2(speed, 0);
+
+            // Destroy after X seconds
+            Destroy(astroid, autoDestroy);
+
+        }
     }
 
     private int randomSign() {
