@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114200071418992870}
   - component: {fileID: 114969410789715206}
   - component: {fileID: 50314633214703632}
+  - component: {fileID: 114971564609373184}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -128,6 +129,27 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114971564609373184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312204756004578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6a21ea77c2c1f49b8b692eae58604b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAngularVelocity: 20
+  maxAngularVelocity: 30
+  autoDestroy: 3.5
+  AstroidPrefab: {fileID: 1894118138903024, guid: b1e8983eac9c4ee4fa5439656c8f70d7,
+    type: 2}
+  directionMean: 0
+  directionVar: 20
+  nrAstroids: 5
+  speedMean: 2
+  speedVar: 0.2
 --- !u!212 &212661393806870514
 SpriteRenderer:
   m_ObjectHideFlags: 1
