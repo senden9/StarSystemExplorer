@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Use PlayerControllerWithoutNetwork. It has also a network part.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;

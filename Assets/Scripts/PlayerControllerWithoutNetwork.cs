@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿/*
+ * Not longer without network. 
+ */
+using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class PlayerControllerWithoutNetwork : MonoBehaviour {
+
+public class PlayerControllerWithoutNetwork : NetworkBehaviour
+{
  
 public float acceleration;
 public float steering;
@@ -14,7 +20,11 @@ void Start()
 
 void FixedUpdate()
 {
-    float h = -Input.GetAxis("Horizontal");
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        float h = -Input.GetAxis("Horizontal");
     float v = Input.GetAxis("Vertical");
 
     Vector2 speed = transform.up * (v * acceleration);
