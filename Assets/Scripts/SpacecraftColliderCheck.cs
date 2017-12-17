@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class SpacecraftColliderCheck : MonoBehaviour
 {
@@ -12,6 +13,21 @@ public class SpacecraftColliderCheck : MonoBehaviour
 	}
 
 	public InteractionKey currentKeyPress = InteractionKey.NOTHING;
+
+	public Image planetInfo;
+
+	private PlanetInfoHide planetInfoHide;
+	private disappearing_uipiece infoText;
+
+	private Planet currentPlanet;
+	
+	public void Start()
+	{
+		this.planetInfoHide = GameObject.Find("/Player1Ui/Canvas/PlanetInfo").GetComponent<PlanetInfoHide>();
+		this.infoText =  GameObject.Find("/Player1Ui/Canvas/PlanetInfo/PlanetInfoText").GetComponent<disappearing_uipiece>();
+
+		this.planetInfoHide.hideGui();
+	}
 	
 	private void OnTriggerEnter2D(Collider2D coll)
 	{
@@ -24,12 +40,14 @@ public class SpacecraftColliderCheck : MonoBehaviour
 		if (planet != null)
 		{
 			collectResources(planet);
-		}
-		
+			this.currentPlanet = planet;
+		}	
 		this.planetAgent = coll.gameObject.GetComponent<PlanetAgent>();
 		if (this.planetAgent != null)
 		{
+			this.infoText.setGuiText(planet.planetResource.count, planet.name);
 			collectResources(planet);
+			this.planetInfoHide.showGui();
 		}
 	}
 
@@ -40,6 +58,7 @@ public class SpacecraftColliderCheck : MonoBehaviour
 		{
 			abortConquering();
 			this.planetAgent = null;
+			this.planetInfoHide.hideGui();
 		}
 	}
 
@@ -53,6 +72,11 @@ public class SpacecraftColliderCheck : MonoBehaviour
 
 	private void Update()
 	{
+		if (this.currentPlanet != null)
+		{
+			this.infoText.setGuiText(this.currentPlanet.planetResource.count, this.currentPlanet.planetName);
+		}
+		
 		if (this.planetAgent != null)
 		{
 			if (Input.GetKey(KeyCode.E))
