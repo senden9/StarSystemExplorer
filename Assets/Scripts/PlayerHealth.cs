@@ -10,6 +10,11 @@ public class PlayerHealth : NetworkBehaviour
     [SyncVar]
     public int currentHealth = maxHealth;
 
+    [SyncVar]
+    public int resourceCount = 200;
+
+    private int oldResourceCount = 0;
+
     // Use this for initialization
     void Start () {
 		
@@ -17,7 +22,16 @@ public class PlayerHealth : NetworkBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (this.oldResourceCount != this.resourceCount)
+		{
+			FindObjectOfType<current_resourceshield>().setCurrentResourceGui(this.resourceCount);
+			this.oldResourceCount = this.resourceCount;
+		}
+	}
+
+	public void collectResource(int count)
+	{
+		this.resourceCount += count;
 	}
 
     public void TakeDamage(int amount)

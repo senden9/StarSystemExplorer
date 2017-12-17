@@ -48,6 +48,7 @@ public class SpacecraftColliderCheck : MonoBehaviour
 		ResourceTypes resourceType;
 		int count = planet.emptyFloatingListAndReturnAccumulatedValues(out resourceType);
 		Debug.Log("Collected: " + resourceType + " " + count);
+		FindObjectOfType<PlayerHealth>().collectResource(count);
 	}
 
 	private void Update()

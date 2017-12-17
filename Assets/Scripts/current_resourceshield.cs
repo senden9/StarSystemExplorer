@@ -9,7 +9,7 @@ public class current_resourceshield : MonoBehaviour {
     void Start () {
 
         planetTextComponent1 = GetComponent<Text>();
-        setCurrentResourceGui(14);
+        setCurrentResourceGui(0);
     }
 
     public void setCurrentResourceGui(int resourcenumber)
