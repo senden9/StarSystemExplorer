@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 [RequireComponent(typeof(Planet))]
 public class PlanetAgent : MonoBehaviour
 {
-    public OwnedBy ownedBy = OwnedBy.NO_ONE;
+    public OwnedByPlayer ownedBy = OwnedByPlayer.NO_ONE;
 
     public static float minePerSecondBase = 100.0f;
     
@@ -20,7 +21,12 @@ public class PlanetAgent : MonoBehaviour
     public float secondsToConquer = 5;
 
     public float currentConquerTime = 0;
-    public OwnedBy currentlyBeeingConqueredBy = OwnedBy.NO_ONE;
+    public OwnedByPlayer currentlyBeeingConqueredBy = OwnedByPlayer.NO_ONE;
+
+    public List<Sprite> conquerStagesPlayer1;
+
+    public List<Sprite> inhabitedStages;
+    
     
     public void mine(float deltaTime)
     {
@@ -39,9 +45,9 @@ public class PlanetAgent : MonoBehaviour
         if (planetScript.planetResource.count <= 0)
         {
             planetScript.planetResource.count = 0;
-            if (ownedBy == OwnedBy.PLAYER_2)
+            if (ownedBy == OwnedByPlayer.PLAYER_2)
             {
-                ownedBy = OwnedBy.DESTROYED;
+                ownedBy = OwnedByPlayer.DESTROYED;
             }
         }
 
@@ -59,7 +65,7 @@ public class PlanetAgent : MonoBehaviour
     
     public void regenerate(float deltaTime)
     {
-        if (this.ownedBy == OwnedBy.DESTROYED)
+        if (this.ownedBy == OwnedByPlayer.DESTROYED)
             return;
 
         if (partlyRegenerated > planetScript.planetResource.maxCount)
@@ -77,10 +83,10 @@ public class PlanetAgent : MonoBehaviour
 
     public void Update()
     {
-        if (ownedBy == OwnedBy.DESTROYED)
+        if (ownedBy == OwnedByPlayer.DESTROYED)
             return;
         
-        if (ownedBy == OwnedBy.PLAYER_1)
+        if (ownedBy == OwnedByPlayer.PLAYER_1)
         {
             float deltaTime = Time.deltaTime;
             this.mine(deltaTime);
@@ -97,15 +103,15 @@ public class PlanetAgent : MonoBehaviour
         }
     }
 
-    public void conquer(OwnedBy from, float deltaTime)
+    public void conquer(OwnedByPlayer from, float deltaTime)
     {
         Debug.Log("Owned By: " + this.ownedBy);
         Debug.Log("Is Already beeing conquered: " +
-                  (currentlyBeeingConqueredBy != OwnedBy.NO_ONE && currentlyBeeingConqueredBy != from));
+                  (currentlyBeeingConqueredBy != OwnedByPlayer.NO_ONE && currentlyBeeingConqueredBy != from));
         Debug.Log("Times up? : " + (this.currentConquerTime >= this.secondsToConquer));
-        if ((this.ownedBy != OwnedBy.DESTROYED ||
-            this.ownedBy != OwnedBy.NO_ONE) && (
-            (currentlyBeeingConqueredBy != OwnedBy.NO_ONE && currentlyBeeingConqueredBy != from) ||
+        if ((this.ownedBy != OwnedByPlayer.DESTROYED ||
+            this.ownedBy != OwnedByPlayer.NO_ONE) && (
+            (currentlyBeeingConqueredBy != OwnedByPlayer.NO_ONE && currentlyBeeingConqueredBy != from) ||
             this.currentConquerTime >= this.secondsToConquer))
         {
             return;
@@ -126,6 +132,6 @@ public class PlanetAgent : MonoBehaviour
     {
         Debug.Log("Aborting Conquering");
         this.currentConquerTime = 0;
-        this.currentlyBeeingConqueredBy = OwnedBy.NO_ONE;
+        this.currentlyBeeingConqueredBy = OwnedByPlayer.NO_ONE;
     }
 }

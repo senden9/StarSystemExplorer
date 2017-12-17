@@ -58,7 +58,7 @@ public class SpacecraftColliderCheck : MonoBehaviour
 			if (Input.GetKey(KeyCode.E))
 			{
 				currentKeyPress = InteractionKey.CONQUER;
-				this.planetAgent.conquer(OwnedBy.PLAYER_1, Time.deltaTime);
+				this.planetAgent.conquer(OwnedByPlayer.PLAYER_1, Time.deltaTime);
 			}
 		}
 		

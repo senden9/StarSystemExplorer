@@ -4,7 +4,7 @@ public class FloatingResource : MonoBehaviour
 {
 	public int resourceCount = 0;
 
-	public OwnedBy ownedBy;
+	public OwnedByPlayer ownedBy;
 	
 	public Resource resource;
 	

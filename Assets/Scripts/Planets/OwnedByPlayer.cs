@@ -1,4 +1,4 @@
-﻿public enum OwnedBy
+﻿public enum OwnedByPlayer
 {
     PLAYER_1,
     PLAYER_2,

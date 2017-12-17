@@ -88,6 +88,9 @@ MonoBehaviour:
   ownedBy: 2
   minePerSecond: 5
   regeneratePerSecond: 5
+  secondsToConquer: 5
+  currentConquerTime: 0
+  currentlyBeeingConqueredBy: 2
 --- !u!114 &114592899507920684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,7 +140,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f935d21d736431140b44697911e85b14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 580e952947f3a04448c32da1d7a9a3d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
