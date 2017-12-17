@@ -24,16 +24,25 @@ public class PlanetInfoHide : MonoBehaviour {
        
         if (Planetinfo.GetComponent<Image>().enabled)
         {
-            Planetinfo.GetComponent<Image>().enabled = false;
-            Planetinfo.GetComponentInChildren<Text>().enabled = false;
+            hideGui();
         }
         else {
-            Planetinfo.GetComponent<Image>().enabled = true;
-            Planetinfo.GetComponentInChildren<Text>().enabled = true;
+            showGui();
         }
         //if (Planetinfo.renderer.) { Planetinfo.SetActive(false); }
         //else { Planetinfo.SetActive(true); }
-        
+    }
+
+    public void showGui()
+    {
+        Planetinfo.GetComponent<Image>().enabled = true;
+        Planetinfo.GetComponentInChildren<Text>().enabled = true;
+    }
+
+    public  void hideGui()
+    {
+        Planetinfo.GetComponent<Image>().enabled = false;
+        Planetinfo.GetComponentInChildren<Text>().enabled = false;
     }
 
 

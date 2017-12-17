@@ -18,6 +18,8 @@ public class Planet : MonoBehaviour
 	public int resourceIndicatorCount = 10;
 
 	public float maxResourceScale = 0.2f;
+
+	public String planetName = null;
 	
 	//Highest Resoruce grows and gets resources added until it is "full"
 	private List<GameObject> freeResources = new List<GameObject>();
@@ -25,11 +27,16 @@ public class Planet : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		int randomnumber = Random.Range(1, 16777215);
 		this.transform.localScale = Vector3.one * scale;
 		this.oldResourceCount = planetResource.count;
 		this.oldResourceImageCount = calculateResourceImageCount();
 		Debug.Log("Number of resource indicators: " + this.oldResourceImageCount);
 		renderResource(0, this.oldResourceImageCount);
+		if (string.IsNullOrEmpty(planetName))
+		{
+			planetName = randomnumber.ToString("X");
+		}
 	}
 	
 	// Update is called once per frame
