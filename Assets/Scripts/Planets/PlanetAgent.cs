@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Planet))]
 public class PlanetAgent : MonoBehaviour
@@ -26,7 +27,10 @@ public class PlanetAgent : MonoBehaviour
     public List<Sprite> conquerStagesPlayer1;
 
     public List<Sprite> inhabitedStages;
-    
+
+    public Sprite uninhibited;
+
+    public int spriteIndex = 0;
     
     public void mine(float deltaTime)
     {
@@ -116,22 +120,30 @@ public class PlanetAgent : MonoBehaviour
         {
             return;
         }
-        
         this.currentlyBeeingConqueredBy = from;
         this.currentConquerTime += deltaTime;
-        Debug.Log("Current Conquering Time: " + this.currentConquerTime);
+        float conquerPercentage = this.currentConquerTime / this.secondsToConquer;
+        Debug.Log("Current Conquering Time: " + this.currentConquerTime + "(" + conquerPercentage + "%)");
 
+        this.spriteIndex = (int) Math.Floor(this.conquerStagesPlayer1.Count * conquerPercentage);
+        if (this.spriteIndex < this.conquerStagesPlayer1.Count)
+            this.GetComponent<SpriteRenderer>().sprite = this.conquerStagesPlayer1[spriteIndex];
         if (this.currentConquerTime >= this.secondsToConquer)
         {
             this.ownedBy = from;
-            Debug.Log("Conquered by: " + from);
+            Debug.Log("Conquered by: " + from);    
+            this.GetComponent<SpriteRenderer>().sprite = this.inhabitedStages[0];
         }
     }
 
     public void abortConquering()
     {
+        if (this.ownedBy != OwnedByPlayer.DESTROYED || this.ownedBy != OwnedByPlayer.NO_ONE)
+            return;
+        
         Debug.Log("Aborting Conquering");
         this.currentConquerTime = 0;
         this.currentlyBeeingConqueredBy = OwnedByPlayer.NO_ONE;
+        this.GetComponent<SpriteRenderer>().sprite = this.uninhibited;
     }
 }
