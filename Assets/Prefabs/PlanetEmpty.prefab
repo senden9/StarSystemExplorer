@@ -91,6 +91,17 @@ MonoBehaviour:
   secondsToConquer: 5
   currentConquerTime: 0
   currentlyBeeingConqueredBy: 2
+  conquerStagesPlayer1:
+  - {fileID: 21300000, guid: 10ec8dab1e01e61428bf35781d6e3d9f, type: 3}
+  - {fileID: 21300000, guid: d31c9cb4a15636a4d9b6198744080b07, type: 3}
+  - {fileID: 21300000, guid: 48a1807b5196f9c438f7a2f8a3673fa2, type: 3}
+  - {fileID: 21300000, guid: b444328970f07c44782d7d8060be003d, type: 3}
+  inhabitedStages:
+  - {fileID: 21300000, guid: f63fcbaf7d1fb364ba6dedc61ab7da1c, type: 3}
+  - {fileID: 21300000, guid: bcc0491d148d95b4596fd1ff9eac57c8, type: 3}
+  - {fileID: 21300000, guid: 35f31231be175824399f9cd44a027b5e, type: 3}
+  uninhibited: {fileID: 21300000, guid: 580e952947f3a04448c32da1d7a9a3d2, type: 3}
+  spriteIndex: 0
 --- !u!114 &114592899507920684
 MonoBehaviour:
   m_ObjectHideFlags: 1
