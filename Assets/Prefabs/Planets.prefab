@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4703806174597232}
   - component: {fileID: 114129800494999706}
-  - component: {fileID: 114055661450334772}
+  - component: {fileID: 114095837009760542}
   m_Layer: 0
   m_Name: Planets
   m_TagString: Untagged
@@ -249,7 +249,7 @@ PolygonCollider2D:
       - {x: -0.5877852, y: -0.80901706}
       - {x: 0.58778536, y: -0.80901694}
       - {x: 0.9510565, y: 0.30901712}
---- !u!114 &114055661450334772
+--- !u!114 &114095837009760542
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

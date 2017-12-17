@@ -460,6 +460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d53ef1bde10b54abf6083910cde176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetAgent: {fileID: 0}
+  currentKeyPress: 1
+  planetInfo: {fileID: 0}
 --- !u!114 &114321748909592938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -472,6 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 100
+  resourceCount: 200
 --- !u!114 &114583834516043440
 MonoBehaviour:
   m_ObjectHideFlags: 1

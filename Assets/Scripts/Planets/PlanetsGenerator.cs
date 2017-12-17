@@ -3,9 +3,10 @@ using System.CodeDom;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
-public class PlanetsGenerator : MonoBehaviour
+public class PlanetsGenerator : NetworkBehaviour
 {
 	public GameObject planetPrefab;
 
