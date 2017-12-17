@@ -23,16 +23,44 @@ public class AsteoridShooting : NetworkBehaviour
     public float speedMean = 2;
     public float speedVar = 0.2f;
 
+    private Vector2 firstMousePos;
+    private Vector2 secondMousePos;
+
+    private State state = State.firstClick;
+
+    private enum State
+    {
+        firstClick,
+        secondClick
+    }
+
     void Start () {
         
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.F) && isLocalPlayer) {
+        /*if (Input.GetKeyDown(KeyCode.F) && isLocalPlayer) {
             fire();
-        }
+        }*/
+        if (Input.GetButtonDown("Fire1") && isServer)
+        {
+            if (state == State.firstClick)
+            {
+                Vector3 pos = Input.mousePosition;
+                firstMousePos = new Vector2(pos.x, pos.y);
+                state = State.secondClick;
+            } else if (state == State.secondClick)
+            {
+                Vector3 pos = Input.mousePosition;
+                secondMousePos = new Vector2(pos.x, pos.y);
+                state = State.firstClick;
 
+                Vector2 v2 = secondMousePos - firstMousePos;
+                directionMean = Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg;
+                fire();
+            }
+        }
     }
 
     public void fire()
@@ -50,9 +78,12 @@ public class AsteoridShooting : NetworkBehaviour
             float direction = Random.Range(directionMean - directionVar / 2, directionMean + directionVar / 2);
             float speed = Random.Range(speedMean - speedVar / 2, speedMean + speedVar / 2);
 
+            Vector3 startPosition = Camera.main.ScreenToWorldPoint(firstMousePos);
+            startPosition.z = 0;
+
             GameObject astroid = (GameObject)Instantiate(
                 AstroidPrefab,
-                gameObject.transform.position,
+                startPosition,
                 gameObject.transform.rotation
                 );
             astroid.GetComponent<Rigidbody2D>().angularVelocity = sign * magnitude;
