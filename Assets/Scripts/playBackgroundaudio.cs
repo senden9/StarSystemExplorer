@@ -9,7 +9,6 @@ public class playBackgroundaudio : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         backgroundmusic = GetComponent<AudioSource>();
-        
     }
 	
 	// Update is called once per frame

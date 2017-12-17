@@ -21,7 +21,7 @@ public class PlanetInfoHide : MonoBehaviour {
     }
 
     private void toggleGui() {
-        Debug.Log( Planetinfo.activeSelf);
+       
         if (Planetinfo.GetComponent<Image>().enabled)
         {
             Planetinfo.GetComponent<Image>().enabled = false;
